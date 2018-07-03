@@ -94,7 +94,7 @@ void setup() {
 
   initNodes();
   nodesArray[NODE_NUM].id = mesh.getNodeId();
-  setLed(strip.Color(0, 50, 0), nodesArray[NODE_NUM].ledId);
+  setLed(strip.Color(0, 30, 0), nodesArray[NODE_NUM].ledId);
 
 
 }
@@ -138,9 +138,15 @@ void receivedCallback(uint32_t from, String & msg) {
   //now track others online
 
   NODE_REC_CNT++;
+  nodesArray[NODE_NUM].cnt = NODE_REC_CNT;
 
   for (int i = 0; i < numNodes; i++)
   {
+
+  Serial.print(nodesArray[i].name);
+  Serial.print(" diff ");
+  Serial.println(abs(NODE_REC_CNT - nodesArray[i].cnt));
+    
     if (msg.indexOf(nodesArray[i].name) > 0)
     {
       setLed(strip.Color(0, 0, 30), nodesArray[i].ledId);
